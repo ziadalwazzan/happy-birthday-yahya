@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { styleReset } from 'react95';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import Confetti from 'react-confetti';
 
 /* Pick a theme of your choice */
 import original from 'react95/dist/themes/original';
@@ -37,7 +38,14 @@ const GlobalStyles = createGlobalStyle`
 function App() {
   const [showUpdateAlert, setShowUpdateAlert] = useState(true);
   const [backgroundColor, setBackgroundColor] = useState('#060084');
+  const [showConfetti, setShowConfetti] = useState(false);
 
+  const handleYesClick = () => {
+    setBackgroundColor('#fdf9db');
+    setShowUpdateAlert(false);
+    setShowConfetti(true);
+    setTimeout(() => setShowConfetti(false), 3500); // Confetti lasts for 3 seconds
+  };
 
   return (
     <div 
@@ -51,12 +59,12 @@ function App() {
           {
             showUpdateAlert &&
             <UpdateAlert 
-              setShowUpdateAlert={setShowUpdateAlert}
-              setBackgroundColor={setBackgroundColor}
+              onYesClick={handleYesClick}
             />
           }
           <div>
             {!showUpdateAlert && <MediaPlayerComponent />}
+            {showConfetti && <Confetti />}
           </div>
         </ThemeProvider>
     </div>
