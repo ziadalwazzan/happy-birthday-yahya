@@ -1,5 +1,7 @@
 import './App.css';
 
+import { useState } from 'react';
+
 import { styleReset } from 'react95';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
@@ -11,6 +13,7 @@ import ms_sans_serif from 'react95/dist/fonts/ms_sans_serif.woff2';
 import ms_sans_serif_bold from 'react95/dist/fonts/ms_sans_serif_bold.woff2';
 
 import UpdateAlert from './components/UpdateAlert';
+import MediaPlayerComponent from './components/MediaPlayerComponent';
 
 const GlobalStyles = createGlobalStyle`
   ${styleReset}
@@ -32,12 +35,29 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 function App() {
+  const [showUpdateAlert, setShowUpdateAlert] = useState(true);
+  const [backgroundColor, setBackgroundColor] = useState('#060084');
+
 
   return (
-    <div className="App">
+    <div 
+    className="App"
+    style={{
+      backgroundColor: backgroundColor
+    }}
+    >
         <GlobalStyles />
         <ThemeProvider theme={original}>
-          <UpdateAlert />
+          {
+            showUpdateAlert &&
+            <UpdateAlert 
+              setShowUpdateAlert={setShowUpdateAlert}
+              setBackgroundColor={setBackgroundColor}
+            />
+          }
+          <div>
+            {!showUpdateAlert && <MediaPlayerComponent />}
+          </div>
         </ThemeProvider>
     </div>
   );

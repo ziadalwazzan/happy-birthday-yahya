@@ -2,14 +2,21 @@ import { Button, WindowHeader, Window, WindowContent } from 'react95';
 
 import { useState } from 'react';
 
-function UpdateAlert() {
+function UpdateAlert( { setShowUpdateAlert, setBackgroundColor} ) {
     const [position, setPosition] = useState({ top: '78%', left: '55%' });
 
     const moveButton = () => {
-        const randX = Math.floor(Math.random() * (window.innerWidth - 100));
-        const randY = Math.floor(Math.random() * (window.innerHeight - 100));
+        const randX = Math.floor(Math.random() * (window.innerWidth - 25)/2);
+        const randY = Math.floor(Math.random() * (window.innerHeight - 25)/2);
         setPosition({ top: `${randY}px`, left: `${randX}px` });
     };
+
+    const handleButtonClick = () => {
+        // Update the state in the parent components
+        setBackgroundColor('#fdf9db');
+        setShowUpdateAlert(false);
+      };
+
     return (
         <Window
         style={{ 
@@ -60,6 +67,7 @@ function UpdateAlert() {
                 </Button>
                 <Button
                 style={{ position: 'absolute', top: "78%", left: "35%" }}
+                onClick={handleButtonClick}
                 >
                     Yes
                 </Button>
